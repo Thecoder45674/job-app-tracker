@@ -1,0 +1,20 @@
+:root {
+    --primary-colour: #FFFFFF;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.sub-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.expand-btn {
+    background-color: var(--primary-colour);
+    border: none;
+    cursor: pointer;
+    padding: 10px;
+}
