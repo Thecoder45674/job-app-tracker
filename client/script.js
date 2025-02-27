@@ -3,7 +3,7 @@
 function toggleView(event) {
     // Find the button's parent .sub-header element, then get the next sibling (content)
     const expandButton = event.currentTarget;
-    const arrow = expandButton.querySelector('icon');
+    const arrow = expandButton.querySelector('.icon');
     const subHeader = expandButton.parentElement;
     const content = subHeader.nextElementSibling;
 
