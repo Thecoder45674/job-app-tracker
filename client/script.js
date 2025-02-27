@@ -2,9 +2,10 @@
 // Function to toggle the view between expanded and collapsed states
 function toggleView(event) {
     // Find the button's parent .sub-header element, then get the next sibling (content)
-    const subHeader = event.target.closest('.sub-header');
-    const content = subHeader ? subHeader.nextElementSibling : null;
-    const arrow = event.target.closest('.icon');
+    const expandButton = event.currentTarget;
+    const arrow = expandButton.querySelector('icon');
+    const subHeader = expandButton.parentElement;
+    const content = subHeader.nextElementSibling;
 
     if (content) {
         // Toggle the visibility of the content div
