@@ -1,10 +1,23 @@
 :root {
     --primary-colour: #FFFFFF;
+    font-family: Seravek, 'Gill Sans Nova', Ubuntu, Calibri, 'DejaVu Sans', source-sans-pro, sans-serif;
+    font-weight: normal;
 }
 
 * {
     margin: 0;
     padding: 0;
+}
+
+#job-tracker {
+    display: flex;
+    flex-direction: column;
+    margin: 50px;
+    gap: 50px;
+}
+
+#header h1 {
+    font-size: 50px;
 }
 
 .sub-header {
