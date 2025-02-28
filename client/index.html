@@ -60,7 +60,49 @@
             </div>
         </section>
 
-        <button id="add-btn">Add New Application</button>
+        <div id="button">
+            <button id="add-btn">Add New Application</button>
+        </div>
+        
+        <dialog id="add-app-dialog">
+            <h2 id="dialog-title">Add New Application</h2>
+            <form id="job-form">
+                <div class="form-field">
+                    <label for="company">Company:</label>
+                    <input type="text" id="company" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="position">Position:</label>
+                    <input type="text" id="position" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="date">Date Applied:</label>
+                    <input type="date" id="date" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="status">Status:</label>
+                    <select id="status" required>
+                        <option value="Applied">Applied</option>
+                        <option value="Interview">Interview</option>
+                        <option value="Rejected">Rejected</option>
+                        <option value="Offer">Offer</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="notes">Notes:</label>
+                    <textarea id="notes" rows="2"></textarea>
+                </div>
+
+                <div class="dialog-buttons">
+                    <button type="submit">Add</button>
+                    <button type="button" id="close-dialog">Cancel</button>
+                </div>
+            </form>
+        </dialog>
     </div>
     <script src="script.js"></script>
 </body>
