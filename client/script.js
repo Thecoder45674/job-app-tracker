@@ -1,8 +1,10 @@
-// Define separate arrays for each application status
-let appliedApplications = [];
-let interviewApplications = [];
-let rejectedApplications = [];
-let offerApplications = [];
+// Define an object to store applications based on status
+const applicationLists = {
+    applied: [],
+    interview: [],
+    rejected: [],
+    offer: []
+};
 
 // Function to toggle the view between expanded and collapsed states
 function toggleView(event) {
@@ -23,68 +25,49 @@ function toggleView(event) {
     }
 }
 
-// Function to add application based on its status
+// Function to get the application section by status
+function getApplicationSection(status) {
+    return document.querySelector(`#${status.toLowerCase()} .content`);
+}
+
+// Function to add and display an application based on its status
 function addApplication(application) {
-    switch (application.status.toLowerCase()) {
-        case 'applied':
-            appliedApplications.push(application);
-            displayApplication(application, 'applied');
-            break;
-        case 'interview':
-            interviewApplications.push(application);
-            displayApplication(application, 'interview');
-            break;
-        case 'rejected':
-            rejectedApplications.push(application);
-            displayApplication(application, 'rejected');
-            break;
-        case 'offer':
-            offerApplications.push(application);
-            displayApplication(application, 'offer');
-            break;
-        default:
-            console.error("Unknown application status");
-    }
+    const statusKey = application.status.toLowerCase();
+
+    applicationLists[statusKey].push(application);
+    displayApplication(application, statusKey);
 }
 
 // Function to display application in the correct section
 function displayApplication(application, sectionID) {
     const contentDiv = document.querySelector(`#${sectionID} .content`);
+    if (!contentDiv) return;
 
     const applicationEntry = document.createElement('p');
     applicationEntry.textContent = `${application.title} at ${application.company} on ${application.date}`;
 
-    if (contentDiv) {
-        contentDiv.appendChild(applicationEntry);
-    }
+    contentDiv.appendChild(applicationEntry);
 }
 
 // Function to handle form submission 
-function handleFromSubmission(event) {
-    // Gather input values
-    const title = document.getElementById("position").value; // Change to position since title is not in the form
-    const company = document.getElementById("company").value;
-    const date = document.getElementById("date").value;
-    const status = document.getElementById("status").value;
-    const notes = document.getElementById("notes").value;
+function handleFormSubmission(event) {
+    event.preventDefault();
 
     const application = {
-        title,
-        company,
-        date,
-        status,
-        notes
+        title: document.getElementById("position").value,
+        company: document.getElementById("company").value,
+        date: document.getElementById("date").value,
+        status: document.getElementById("status").value,
+        notes: document.getElementById("notes").value
     };
 
     addApplication(application);
-
     closeDialog();
 }
 
 // Function to open the dialog
 function openDialog() {
-    const dialog = document.getElementById("add-app-dialog");
-    dialog.showModal();
+    document.getElementById("add-app-dialog").showModal();
 }
 
 // Function to close the dialog
@@ -98,21 +81,11 @@ function closeDialog() {
 
 // Attach Event Listeners to Buttons
 document.addEventListener('DOMContentLoaded', () => {
-    const dialog = document.getElementById('add-app-dialog');
-    const closeDialogBtn = document.getElementById('close-dialog-btn');
-    const openDialogBtn = document.getElementById('add-btn');
-    const jobForm = document.getElementById('job-form');
-
-    // Event listeners for expand buttons
     document.querySelectorAll('.expand-btn').forEach(button => {
         button.addEventListener("click", toggleView);
     });
 
-    // Open Dialog on button click
-    openDialogBtn.addEventListener("click", openDialog)
-
-    // Close Dialog on button click
-    closeDialogBtn.addEventListener("click", closeDialog);
-
-    jobForm.addEventListener("submit", handleFromSubmission);
+    document.getElementById('add-btn').addEventListener("click", openDialog);
+    document.getElementById('close-dialog-btn').addEventListener("click", closeDialog);
+    document.getElementById('job-form').addEventListener("submit", handleFormSubmission);
 })
