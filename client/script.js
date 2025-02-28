@@ -25,10 +25,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const dialog = document.getElementById("add-app-dialog");
     const closeDialogBtn = document.getElementById("close-dialog-btn");
+    const openDialogBtn = document.getElementById("add-btn");
 
     document.querySelectorAll('.expand-btn').forEach(button => {
         button.addEventListener("click", toggleView);
     });
+
+    // Open Dialog on button click
+    openDialogBtn.addEventListener("click", () => {
+        dialog.style.display = "block";
+    })
 
     // Close Dialog on button click
     closeDialogBtn.addEventListener("click", () => {
