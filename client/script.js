@@ -22,7 +22,16 @@ function toggleView(event) {
 
 // Attach Event Listeners to Buttons
 document.addEventListener('DOMContentLoaded', () => {
+
+    const dialog = document.getElementById("add-app-dialog");
+    const closeDialogBtn = document.getElementById("close-dialog-btn");
+
     document.querySelectorAll('.expand-btn').forEach(button => {
         button.addEventListener("click", toggleView);
+    });
+
+    // Close Dialog on button click
+    closeDialogBtn.addEventListener("click", () => {
+        dialog.style.display = "none";
     });
 })
