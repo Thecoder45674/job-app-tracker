@@ -53,7 +53,6 @@ function displayApplication(application, sectionID) {
             <span class="job-date">${application.date}</span>
         </div>
         <p class="company"><strong>Company:</strong> ${application.company}</p>
-        <p class="status"><strong>Status:</strong> ${application.status}</p>
         <p class="job-notes hidden">${application.notes}</p>
     `;
 

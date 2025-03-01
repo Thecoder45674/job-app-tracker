@@ -203,8 +203,7 @@ select {
     border-radius: 6px;
 }
 
-.company,
-.status {
+.company {
     font-size: 1em;
     margin: 6px 0;
     font-weight: 500;
@@ -214,5 +213,3 @@ select {
 .hidden {
     display: none;
 }
-
-
