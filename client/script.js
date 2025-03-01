@@ -43,8 +43,19 @@ function displayApplication(application, sectionID) {
     const contentDiv = document.querySelector(`#${sectionID} .content`);
     if (!contentDiv) return;
 
-    const applicationEntry = document.createElement('p');
-    applicationEntry.textContent = `${application.title} at ${application.company} on ${application.date}`;
+    const applicationEntry = document.createElement('button');
+    applicationEntry.classList.add('job-card');
+    applicationEntry.setAttribute('data-item', application.title);
+
+    applicationEntry.innerHTML = `
+        <div class="job-header">
+            <h2>${application.title}</h2>
+            <span class="job-date">${application.date}</span>
+        </div>
+        <p class="company"><strong>Company:</strong> ${application.company}</p>
+        <p class="status"><strong>Status:</strong> ${application.status}</p>
+        <p class="job-notes hidden">${application.notes}</p>
+    `;
 
     contentDiv.appendChild(applicationEntry);
 }
