@@ -77,7 +77,7 @@ function handleFormSubmission(event) {
     };
 
     addApplication(application);
-    closeDialog();
+    closeAddApplicationDialog();
 }
 
 // Function to create and display a blank dialog with application action buttons
@@ -86,34 +86,38 @@ function showDialog(application) {
     const dialog = document.createElement('dialog');
     dialog.classList.add('dialog');
 
-    // Create the close button
-    const closeButton = document.createElement('button');
-    closeButton.id = "close-dialog-btn";
-    closeButton.type = "button";
-    closeButton.textContent = "X";
-    closeButton.onclick = function () {
-        dialog.close();
-        document.body.removeChild(dialog); 
-    };
-
-
-    dialog.appendChild(closeButton);
     document.body.appendChild(dialog);
     dialog.showModal();
+
+    attachDialogCloseListener(dialog);
 }
 
-// Function to open the dialog
-function openDialog() {
-    document.querySelector("dialog").showModal();
+function attachDialogCloseListener(dialog) {
+    dialog.addEventListener('click', (event) => {
+        if (event.target === dialog) {
+            dialog.close();
+            document.body.removeChild(dialog); // Remove dialog from the DOM after closing
+        }
+    });
+}
+
+// Function to create and display the "Add New Application" dialog
+function openAddApplicationDialog() {
+    const dialog = document.getElementById("add-app-dialog");
+    dialog.showModal();
+
+    // Attach event listener to close the dialog when clicking outside
+    attachDialogCloseListener(dialog);
 }
 
 // Function to close the dialog
-function closeDialog() {
-    const dialog = document.querySelector("dialog");
-    const form = document.getElementById("job-form");
-    
-    dialog.close();
-    form.reset();
+function closeAddApplicationDialog() {
+    const dialog = document.getElementById("add-app-dialog");
+    if (dialog) {
+        dialog.close();
+        // Optional: reset the form when closing
+        document.getElementById("job-form").reset();
+    }
 }
 
 // Attach Event Listeners to Buttons
@@ -122,7 +126,6 @@ document.addEventListener('DOMContentLoaded', () => {
         button.addEventListener("click", toggleView);
     });
 
-    document.getElementById('add-btn').addEventListener("click", openDialog);
-    document.getElementById('close-dialog-btn').addEventListener("click", closeDialog);
+    document.getElementById('add-btn').addEventListener("click", openAddApplicationDialog);
     document.getElementById('job-form').addEventListener("submit", handleFormSubmission);
 })
