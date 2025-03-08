@@ -226,3 +226,17 @@ select {
 .action-button:active {
     transform: translateY(1px); 
 }
+
+#notes-content {
+    background-color: var(--primary-color);
+    padding: 20px;
+    border-radius: 8px;
+    max-height: 70vh;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+#notes-content p {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+}
