@@ -86,17 +86,47 @@ function showDialog(application) {
     const dialog = document.createElement('dialog');
     dialog.classList.add('dialog');
 
+    // Create dialog content
+    const dialogContent = document.createElement('div');
+    dialogContent.classList.add("dialog-options");
+
+    // Button to view notes
+    const viewNotesButton = createActionButton('View Notes', () => console.log("View notes"));
+
+    // Button to update status
+    const updateStatusButton = createActionButton('Update Status', () => console.log("Update"));
+
+    // Button to edit application
+    const editApplicationButton = createActionButton('Edit Application', () => console.log("edit"));
+
+    // Button to delete application
+    const deleteApplicationButton = createActionButton('Delete Application', () => console.log("deleted"));
+
+    // Append buttons to the button container
+    dialogContent.appendChild(viewNotesButton);
+    dialogContent.appendChild(updateStatusButton);
+    dialogContent.appendChild(editApplicationButton);
+    dialogContent.appendChild(deleteApplicationButton);
+
+    dialog.appendChild(dialogContent)
     document.body.appendChild(dialog);
     dialog.showModal();
 
     attachDialogCloseListener(dialog);
 }
 
+// Function to create an action button
+function createActionButton(text, onClick) {
+    const button = document.createElement('button');
+    button.textContent = text;
+    button.onclick = onClick;
+    return button;
+}
+
 function attachDialogCloseListener(dialog) {
     dialog.addEventListener('click', (event) => {
         if (event.target === dialog) {
             dialog.close();
-            document.body.removeChild(dialog); // Remove dialog from the DOM after closing
         }
     });
 }
