@@ -208,7 +208,7 @@ function deleteApplication(applicationID) {
                     contentDiv.removeChild(applicationEntry);
                 }
             }
-            
+
             saveApplicationsToLocalStorage();
             break;
         }
@@ -219,7 +219,6 @@ function attachDialogCloseListener(dialog) {
     dialog.addEventListener('click', (event) => {
         if (event.target === dialog) {
             dialog.close();
-            document.body.removeChild(dialog);
         }
     });
 }
