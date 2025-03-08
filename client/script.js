@@ -6,6 +6,14 @@ const applicationLists = {
     offer: []
 };
 
+// Counter to generate unique ID
+let applicationIdCounter = 0;
+
+// Function to generate unique application IDs
+function generateApplicationId() {
+    return ++applicationIdCounter;
+}
+
 // Function to toggle the view between expanded and collapsed states
 function toggleView(event) {
     const expandButton = event.currentTarget;
@@ -46,6 +54,7 @@ function displayApplication(application, sectionID) {
     const applicationEntry = document.createElement('button');
     applicationEntry.classList.add('job-card');
     applicationEntry.setAttribute('data-item', application.title);
+    applicationEntry.setAttribute('data-id', application.id);
 
     applicationEntry.innerHTML = `
         <div class="job-header">
@@ -58,7 +67,6 @@ function displayApplication(application, sectionID) {
     // Add click event to show details in a dialong
     applicationEntry.addEventListener("click", () => {
         showDialog(application);
-        console.log("application click");
     });
 
     contentDiv.appendChild(applicationEntry);
@@ -69,6 +77,7 @@ function handleFormSubmission(event) {
     event.preventDefault();
 
     const application = {
+        id: generateApplicationId(),
         title: document.getElementById("position").value,
         company: document.getElementById("company").value,
         date: document.getElementById("date").value,
@@ -91,16 +100,24 @@ function showDialog(application) {
     dialogContent.classList.add("dialog-options");
 
     // Button to view notes
-    const viewNotesButton = createActionButton('View Notes', () => console.log("View notes"));
+    const viewNotesButton = createActionButton('View Notes', () => {
+        console.log("View notes:", application.notes);
+    });
 
     // Button to update status
-    const updateStatusButton = createActionButton('Update Status', () => console.log("Update"));
+    const updateStatusButton = createActionButton('Update Status', () => {
+        console.log("Update status for:", application.id);
+    });
 
     // Button to edit application
-    const editApplicationButton = createActionButton('Edit Application', () => console.log("edit"));
+    const editApplicationButton = createActionButton('Edit Application', () => {
+        console.log("Edit application:", application.id);
+    });
 
     // Button to delete application
-    const deleteApplicationButton = createActionButton('Delete Application', () => console.log("deleted"));
+    const deleteApplicationButton = createActionButton('Delete Application', () => {
+        console.log("Delete application:", application.id);
+    });
 
     // Append buttons to the button container
     dialogContent.appendChild(viewNotesButton);
