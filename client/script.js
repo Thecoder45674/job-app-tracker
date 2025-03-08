@@ -33,6 +33,24 @@ function toggleView(event) {
     }
 }
 
+// Function to save applications to local storage
+function saveApplicationsToLocalStorage() {
+    localStorage.setItem('applications', JSON.stringify(applicationLists));
+}
+
+// Function to load applications from local storage
+function loadApplicationsFromLocalStorage() {
+    const storedApplications = localStorage.getItem('applications');
+    if (storedApplications) {
+        const parsedApplications = JSON.parse(storedApplications);
+        for (const status in parsedApplications) {
+            parsedApplications[status].forEach(application => {
+                addApplication(application); 
+            });
+        }
+    }
+}
+
 // Function to get the application section by status
 function getApplicationSection(status) {
     return document.querySelector(`#${status.toLowerCase()} .content`);
@@ -44,6 +62,8 @@ function addApplication(application) {
 
     applicationLists[statusKey].push(application);
     displayApplication(application, statusKey);
+
+    saveApplicationsToLocalStorage();
 }
 
 // Function to display application in the correct section
@@ -169,6 +189,8 @@ function closeAddApplicationDialog() {
 
 // Attach Event Listeners to Buttons
 document.addEventListener('DOMContentLoaded', () => {
+    loadApplicationsFromLocalStorage();
+
     document.querySelectorAll('.expand-btn').forEach(button => {
         button.addEventListener("click", toggleView);
     });
