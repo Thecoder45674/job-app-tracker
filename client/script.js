@@ -53,8 +53,13 @@ function displayApplication(application, sectionID) {
             <span class="job-date">${application.date}</span>
         </div>
         <p class="company"><strong>Company:</strong> ${application.company}</p>
-        <p class="job-notes hidden">${application.notes}</p>
     `;
+
+    // Add click event to show details in a dialong
+    applicationEntry.addEventListener("click", () => {
+        showDialog(application);
+        console.log("application click");
+    });
 
     contentDiv.appendChild(applicationEntry);
 }
@@ -75,14 +80,36 @@ function handleFormSubmission(event) {
     closeDialog();
 }
 
+// Function to create and display a blank dialog with application action buttons
+function showDialog(application) {
+    // Create the dialog element
+    const dialog = document.createElement('dialog');
+    dialog.classList.add('dialog');
+
+    // Create the close button
+    const closeButton = document.createElement('button');
+    closeButton.id = "close-dialog-btn";
+    closeButton.type = "button";
+    closeButton.textContent = "X";
+    closeButton.onclick = function () {
+        dialog.close();
+        document.body.removeChild(dialog); 
+    };
+
+
+    dialog.appendChild(closeButton);
+    document.body.appendChild(dialog);
+    dialog.showModal();
+}
+
 // Function to open the dialog
 function openDialog() {
-    document.getElementById("add-app-dialog").showModal();
+    document.querySelector("dialog").showModal();
 }
 
 // Function to close the dialog
 function closeDialog() {
-    const dialog = document.getElementById("add-app-dialog");
+    const dialog = document.querySelector("dialog");
     const form = document.getElementById("job-form");
     
     dialog.close();
