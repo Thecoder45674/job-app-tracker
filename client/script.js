@@ -115,7 +115,6 @@ function showDialog(application) {
     const dialog = document.createElement('dialog');
     dialog.classList.add('dialog');
 
-    // Create dialog content
     const dialogContent = document.createElement('div');
     dialogContent.classList.add("dialog-options");
 
@@ -127,7 +126,8 @@ function showDialog(application) {
 
     // Button to view notes
     const viewNotesButton = createActionButton('View Notes', () => {
-        console.log("View notes:", application.notes);
+        viewNotes(application);
+        dialog.close()
     });
 
     // Button to update status
@@ -145,14 +145,13 @@ function showDialog(application) {
         console.log("Delete application:", application.id);
     });
 
-    // Append buttons to the button container
     dialogContent.appendChild(viewNotesButton);
     dialogContent.appendChild(updateStatusButton);
     dialogContent.appendChild(editApplicationButton);
     dialogContent.appendChild(deleteApplicationButton);
-
     dialog.appendChild(dialogContent)
     document.body.appendChild(dialog);
+
     dialog.showModal();
 
     attachDialogCloseListener(dialog);
@@ -165,6 +164,30 @@ function createActionButton(text, onClick) {
     button.textContent = text;
     button.onclick = onClick;
     return button;
+}
+
+// Function to view notes for a specific application 
+function viewNotes(application) {
+    const dialog = document.createElement('dialog');
+    dialog.classList.add('dialog');
+
+    const dialogTitle = document.createElement('h3');
+    dialogTitle.classList.add('dialog-title');
+    dialogTitle.textContent = 'Application Notes';
+
+    const notesContent = document.createElement('div');
+    notesContent.setAttribute('id', 'notes-content');
+    notesContent.innerHTML = `
+        <p>${application.notes || "No notes available."}</p>
+    `;
+
+    dialog.appendChild(dialogTitle);
+    dialog.appendChild(notesContent);
+    document.body.appendChild(dialog);
+
+    dialog.showModal();
+
+    attachDialogCloseListener(dialog);
 }
 
 function attachDialogCloseListener(dialog) {
