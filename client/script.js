@@ -127,7 +127,7 @@ function showDialog(application) {
     // Button to view notes
     const viewNotesButton = createActionButton('View Notes', () => {
         viewNotes(application);
-        dialog.close()
+        dialog.close();
     });
 
     // Button to update status
@@ -142,7 +142,8 @@ function showDialog(application) {
 
     // Button to delete application
     const deleteApplicationButton = createActionButton('Delete Application', () => {
-        console.log("Delete application:", application.id);
+        deleteApplication(application.id);
+        dialog.close();
     });
 
     dialogContent.appendChild(viewNotesButton);
@@ -188,6 +189,30 @@ function viewNotes(application) {
     dialog.showModal();
 
     attachDialogCloseListener(dialog);
+}
+
+// Function to delete an application by its title
+function deleteApplication(applicationID) {
+    for (const status in applicationLists) {
+        // Find the index of the application by title
+        const index = applicationLists[status].findIndex(app => app.id === applicationID);
+        if (index !== -1) {
+            // Remove the application from the array
+            applicationLists[status].splice(index, 1);
+
+            // Remove the application from the DOM
+            const contentDiv = getApplicationSection(status);
+            if (contentDiv) {
+                const applicationEntry = contentDiv.querySelector(`button[data-id="${applicationID}"]`);
+                if (applicationEntry) {
+                    contentDiv.removeChild(applicationEntry);
+                }
+            }
+            
+            saveApplicationsToLocalStorage();
+            break;
+        }
+    }
 }
 
 function attachDialogCloseListener(dialog) {
