@@ -119,6 +119,12 @@ function showDialog(application) {
     const dialogContent = document.createElement('div');
     dialogContent.classList.add("dialog-options");
 
+    // Create and append the title for the options
+    const optionsTitle = document.createElement('h1');
+    optionsTitle.textContent = 'Application Options';
+    optionsTitle.classList.add('dialog-title');
+    dialogContent.appendChild(optionsTitle); 
+
     // Button to view notes
     const viewNotesButton = createActionButton('View Notes', () => {
         console.log("View notes:", application.notes);
@@ -155,6 +161,7 @@ function showDialog(application) {
 // Function to create an action button
 function createActionButton(text, onClick) {
     const button = document.createElement('button');
+    button.classList.add('action-button');
     button.textContent = text;
     button.onclick = onClick;
     return button;
@@ -164,6 +171,7 @@ function attachDialogCloseListener(dialog) {
     dialog.addEventListener('click', (event) => {
         if (event.target === dialog) {
             dialog.close();
+            document.body.removeChild(dialog);
         }
     });
 }
