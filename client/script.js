@@ -21,16 +21,41 @@ function toggleView(event) {
     const subHeader = expandButton.parentElement;
     const content = subHeader.nextElementSibling;
 
+    const sectionId = subHeader.parentElement.id;
+
     if (content) {
-        if (content.style.display === "none" || content.style.display === "") {
-            content.style.display = "block";
-            arrow.src = "assets/up-arrow.svg";
-            
-        } else {
-            content.style.display = "none";
-            arrow.src = "assets/down-arrow.svg";
-        }
+        const isExpanded = content.style.display === "block";
+
+        // Toggle the display state
+        content.style.display = isExpanded ? "none" : "block";
+        arrow.src = isExpanded ? "assets/down-arrow.svg" : "assets/up-arrow.svg";
+
+        // Save the toggle state in Local Storage
+        localStorage.setItem(`${sectionId}-expanded`, !isExpanded);
     }
+}
+
+// Function to load the toggle state from Local Storage 
+function loadToggleStates(){
+    const sections = ['applied', 'interview', 'rejected', 'offer'];
+
+    sections.forEach(section => {
+        // Get the stored state
+        const expanded = localStorage.getItem(`${section}-expanded`) === 'true';
+
+        const contentDiv = getApplicationSection(section);
+        const arrow = document.querySelector(`#${section} .expand-btn .icon`);
+
+        if (contentDiv) {
+            if (!expanded) {
+                contentDiv.style.display = "none";
+                arrow.src = "assets/down-arrow.svg"; 
+            } else {
+                contentDiv.style.display = "block"; 
+                arrow.src = "assets/up-arrow.svg"; 
+            }
+        }
+    });
 }
 
 // Function to save applications to local storage
@@ -244,7 +269,8 @@ function closeAddApplicationDialog() {
 
 // Attach Event Listeners to Buttons
 document.addEventListener('DOMContentLoaded', () => {
-    loadApplicationsFromLocalStorage();
+    loadApplicationsFromLocalStorage();  // Load applications from local storage
+    loadToggleStates(); // Load the toggle states after loading applications
 
     document.querySelectorAll('.expand-btn').forEach(button => {
         button.addEventListener("click", toggleView);
